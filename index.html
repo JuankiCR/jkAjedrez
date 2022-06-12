@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jkChess</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="chessBoard" class="board">
+    </div>
+    <script>
+        createBoard();
+        
+        function putPieces(pieceName, col, row, className, idName){
+            for (cIdx in col){
+                for (rIdx in row){
+                    pos = parseInt(cIdx)+1;
+                    cell = document.getElementById(col[cIdx]+row[rIdx]);
+                    piece = document.createElement('img');
+                    piece.setAttribute("id", idName+pos);
+                    piece.classList.add('pieces');
+                    piece.classList.add(className);
+                    piece.src = './media/pieces/'+pieceName+'_solid.svg';
+                    cell.appendChild(piece);
+                }
+            }
+        }
+
+        function createBoard(){
+            board = document.getElementById('chessBoard');
+            colIndex = ['A','B','C','D','E','F','G','H'];
+            
+            for (let i = 8; i >= 1; i--){
+                for (idx in colIndex){
+                    boardCell = document.createElement('div');
+                    boardCell.setAttribute("id", colIndex[idx]+i);
+                    
+                    if(idx%2 === 0){ boardCell.classList.add((i%2 === 0) ? 'cellW' : 'cellB'); }
+                    else{ boardCell.classList.add((i%2 === 0) ? 'cellB' : 'cellW'); }
+                    
+                    board.appendChild(boardCell);
+                }
+            }
+
+            //Pawns
+            putPieces('pawn',colIndex, [2],'pWhite', 'wPawn');
+            putPieces('pawn',colIndex, [7],'pBlack', 'bPawn');
+            //Rooks
+            putPieces('rook',['A','H'], [1],'pWhite', 'wRook');
+            putPieces('rook',['A','H'], [8],'pBlack', 'bRook');
+            //Knights
+            putPieces('knight',['B','G'], [1],'pWhite', 'wKnight');
+            putPieces('knight',['B','G'], [8],'pBlack', 'bKnight');
+            //Bishops
+            putPieces('bishop',['C','F'], [1],'pWhite', 'wBishop');
+            putPieces('bishop',['C','F'], [8],'pBlack', 'bBishop');
+            //Kings
+            putPieces('king',['E'], [1],'pWhite', 'wKing');
+            putPieces('king',['E'], [8],'pBlack', 'bKing');
+            //Queens
+            putPieces('queen',['D'], [1],'pWhite', 'wBishop');
+            putPieces('queen',['D'], [8],'pBlack', 'bBishop');
+            
+        };
+    </script>
+</body>
+</html>
